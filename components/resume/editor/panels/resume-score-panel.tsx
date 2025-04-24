@@ -70,7 +70,7 @@ interface ResumeScorePanelProps {
   resume: Resume;
 }
 
-const LOCAL_STORAGE_KEY = 'resumelm-resume-scores';
+const LOCAL_STORAGE_KEY = 'Auto Talent-resume-scores';
 const MAX_SCORES = 10;
 
 function getStoredScores(resumeId: string): ResumeScoreMetrics | null {
@@ -122,8 +122,8 @@ export default function ResumeScorePanel({ resume }: ResumeScorePanelProps) {
   const handleRecalculate = async () => {
     setIsCalculating(true);
     try {
-        const MODEL_STORAGE_KEY = 'resumelm-default-model';
-        // const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
+        const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
+        // const LOCAL_STORAGE_KEY = 'Auto Talent-api-keys';
   
         const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
         // const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);

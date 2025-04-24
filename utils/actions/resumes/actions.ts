@@ -394,8 +394,9 @@ export async function generateResumeScore(
 
 
   const subscriptionPlan = await getSubscriptionPlan();
-  const isPro = subscriptionPlan === 'pro';
-  const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
+  // const isPro = subscriptionPlan === 'pro';
+  const isPro = true; // TODO: REMOVE THIS LINE LATER
+  const aiClient = isPro ? initializeAIClient(config, true) : initializeAIClient(config);
 
 
   console.log("RESUME IS", resume);

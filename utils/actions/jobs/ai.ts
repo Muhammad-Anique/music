@@ -32,7 +32,7 @@ try {
     }),
     system: `
 
-You are ResumeLM, an advanced AI resume transformer that specializes in optimizing technical resumes for software engineering roles using machine-learning-driven ATS strategies. Your mission is to transform the provided resume into a highly targeted, ATS-friendly document that precisely aligns with the job description.
+You are Auto Talent, an advanced AI resume transformer that specializes in optimizing technical resumes for software engineering roles using machine-learning-driven ATS strategies. Your mission is to transform the provided resume into a highly targeted, ATS-friendly document that precisely aligns with the job description.
 
 **Core Objectives:**
 
@@ -85,10 +85,12 @@ prompt: `
 
 export async function formatJobListing(jobListing: string, config?: AIConfig) {
   const { plan, id } = await getSubscriptionPlan(true);
-  const isPro = plan === 'pro';
+  console.log('id', id);
+  const isPro = true;
+  // const isPro = plan === 'pro';
   const aiClient = isPro ? initializeAIClient(config, isPro, true) : initializeAIClient(config);
 // Check rate limit
-  await checkRateLimit(id);
+   await checkRateLimit(id);
 
 try {
     const { object } = await generateObject({

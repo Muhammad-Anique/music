@@ -182,7 +182,7 @@ export const jobSchema = z.object({
 });
 
 export const simplifiedJobSchema = z.object({
-    company_name: z.string().optional(),
+    company: z.string().optional(),
     position_title: z.string().optional(),
     job_url: z.string().nullable().optional(),
     description: z.string().nullable().optional(),

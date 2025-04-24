@@ -126,49 +126,46 @@ export function TailoredJobCard({
       });
       return;
     }
-
+  
     try {
       setIsFormatting(true);
-
-      // Get model and API key from local storage
-      const MODEL_STORAGE_KEY = 'resumelm-default-model';
-      const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
-
+  
+      const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
       const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
-      const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);
-      let apiKeys = [];
-
-      try {
-        apiKeys = storedKeys ? JSON.parse(storedKeys) : [];
-      } catch (error) {
-        console.error('Error parsing API keys:', error);
-      }
-
-      // Format job listing using AI
-      const formattedJob = await formatJobListing(jobDescription, {
-        model: selectedModel || '',
-        apiKeys
+  
+      // Hit server API instead of calling AI directly
+      const res = await fetch('/api/format-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jobDescription,
+          config: {
+            model: selectedModel || 'gpt-4o-mini',
+            apiKeys: [], // If needed, handle inside server instead
+          }
+        })
       });
-
+  
+      const data = await res.json();
+  
+      if (!data.success) throw new Error(data.error || 'Job formatting failed');
+  
+      const formattedJob = data.formattedJob;
+  
       setIsFormatting(false);
       setIsCreating(true);
-
-      // Create job in database
+  
       const newJob = await createJob(formattedJob);
-      
-      // Update resume with new job ID using context
       dispatch({ type: 'UPDATE_FIELD', field: 'job_id', value: newJob.id });
-      
-      // Save the changes to the database
+  
       await updateResume(state.resume.id, {
         ...state.resume,
         job_id: newJob.id
       });
-      
-      // Close dialog and refresh
+  
       setCreateDialogOpen(false);
       router.refresh();
-
+  
     } catch (error) {
       console.error('Error creating job:', error);
       toast({
@@ -182,6 +179,7 @@ export function TailoredJobCard({
       setJobDescription('');
     }
   };
+  
 
   // Enhanced loading skeleton with proper ARIA and animations
   const LoadingSkeleton = () => (

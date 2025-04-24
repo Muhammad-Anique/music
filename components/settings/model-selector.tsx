@@ -8,8 +8,8 @@ import Image from 'next/image'
 import { getSubscriptionPlan } from "@/utils/actions/stripe/actions"
 
 
-const MODEL_STORAGE_KEY = 'resumelm-default-model'
-const LOCAL_STORAGE_KEY = 'resumelm-api-keys'
+const MODEL_STORAGE_KEY = 'Auto Talent-default-model'
+const LOCAL_STORAGE_KEY = 'Auto Talent-api-keys'
 
 interface ApiKey {
   service: ServiceName

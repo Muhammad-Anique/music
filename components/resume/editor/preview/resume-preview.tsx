@@ -111,8 +111,7 @@ interface ResumePreviewProps {
 export const ResumePreview = memo(function ResumePreview({ resume, variant = 'base', containerWidth }: ResumePreviewProps) {
   const [url, setUrl] = useState<string | null>(null);
   const [numPages, setNumPages] = useState<number>(0);
-  const debouncedWidth = useDebouncedValue(containerWidth, 100);
-  
+  const debouncedWidth = useDebouncedValue(containerWidth, 1000);
 
   // Convert percentage to pixels based on parent container
   const getPixelWidth = useCallback(() => {
@@ -325,7 +324,7 @@ export const ResumePreview = memo(function ResumePreview({ resume, variant = 'ba
               key={`page_${index + 1}`}
               pageNumber={index + 1}
               className="mb-4 shadow-xl "
-              width={getPixelWidth()}
+              width={1000} // Convert percentage to pixels
               renderAnnotationLayer={true}
               renderTextLayer={shouldRenderTextLayer}
             />

@@ -9,7 +9,7 @@ export function CreatorStory() {
           <div className="relative aspect-square w-64 md:w-96 mx-auto md:mx-0 rounded-2xl overflow-hidden">
             <Image
               src="/alex.webp"
-              alt="Alex, creator of ResumeLM"
+              alt="Alex, creator of Auto Talent"
               fill
               sizes="(max-width: 768px) 256px, 384px"
               className="object-cover"
@@ -20,7 +20,7 @@ export function CreatorStory() {
           {/* Story Content */}
           <div className="space-y-6">
             <h2 className="text-4xl font-bold tracking-tight sm:text-uxl bg-gradient-to-r from-violet-600 via-blue-600 to-violet-600 bg-clip-text text-transparent">
-              Why I Built ResumeLM
+              Why I Built Auto Talent
             </h2>
             
             <div className="space-y-4 text-lg text-muted-foreground/90 leading-relaxed">
@@ -30,7 +30,7 @@ export function CreatorStory() {
               </p>
               
               <p>
-                ResumeLM is my passion project - a free, open-source resume builder designed to help students and developers 
+                Auto Talent is my passion project - a free, open-source resume builder designed to help students and developers 
                 create ATS-optimized resumes without the hefty subscription costs. Because everyone deserves access to great tools.
               </p>
 

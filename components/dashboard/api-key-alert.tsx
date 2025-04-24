@@ -8,7 +8,7 @@ import Link from "next/link"
 import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button"
 
 function checkForApiKeys() {
-  const storedKeys = localStorage.getItem('resumelm-api-keys')
+  const storedKeys = localStorage.getItem('Auto Talent-api-keys')
   if (!storedKeys) return false
   
   try {
@@ -64,7 +64,7 @@ export function ApiKeyAlert() {
               </a>
             </div>
           </div>
-          <Link href="/settings">
+          <Link href="/dashboard/settings">
             <Button
               size="sm"
               className="bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700"

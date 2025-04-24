@@ -102,16 +102,28 @@ export function TextImportDialog({
       });
       return;
     }
-
+  
     setIsProcessing(true);
     try {
-      const updatedResume = await addTextToResume(content, resume);
-      
-      // Update each field of the resume
+      const response = await fetch('/api/import-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content, resume }),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Failed to import text');
+      }
+  
+      const updatedResume = result.resume;
       (Object.keys(updatedResume) as Array<keyof Resume>).forEach((key) => {
         onResumeChange(key, updatedResume[key] as Resume[keyof Resume]);
       });
-
+  
       toast({
         title: "Import successful",
         description: "Your resume has been updated with the imported content.",
@@ -121,21 +133,16 @@ export function TextImportDialog({
     } catch (error) {
       console.error('Import error:', error);
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-      if (errorMessage.includes('API key')) {
-        setApiKeyError(
-          'API key required. Please add your OpenAI API key in settings or upgrade to our Pro Plan.'
-        );
-      } else {
-        toast({
-          title: "Import failed",
-          description: "Failed to process the text. Please try again.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Import failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
     } finally {
       setIsProcessing(false);
     }
   };
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

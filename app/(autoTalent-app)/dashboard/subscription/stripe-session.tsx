@@ -1,7 +1,7 @@
 "use server";
 
 import { Stripe } from "stripe";
-import { checkAuth } from "@/app/auth/login/actions";
+import { checkAuth } from "@/app/(auth)/signin/actions";
 import { createOrRetrieveCustomer } from "@/utils/actions/stripe/actions";
 
 const apiKey = process.env.STRIPE_SECRET_KEY as string;

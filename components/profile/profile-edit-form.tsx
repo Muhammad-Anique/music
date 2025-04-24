@@ -144,8 +144,8 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
       setIsProcessingResume(true);
       
       // Get model and API key from local storage
-      const MODEL_STORAGE_KEY = 'resumelm-default-model';
-      const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
+      const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
+      const LOCAL_STORAGE_KEY = 'Auto Talent-api-keys';
       
       const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY) || 'claude-3-sonnet-20240229';
       const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);

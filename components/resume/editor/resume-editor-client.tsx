@@ -31,7 +31,7 @@ export function ResumeEditorClient({
 
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
-  const debouncedResume = useDebouncedValue(state.resume, 100);
+  const debouncedResume = useDebouncedValue(state.resume, 1000);
   const [job, setJob] = useState<Job | null>(null);
   const [isLoadingJob, setIsLoadingJob] = useState(false);
 

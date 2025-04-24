@@ -201,7 +201,8 @@ export async function convertTextToResume(prompt: string, existingResume: Resume
           config?: AIConfig
       ) {
           const subscriptionPlan = await getSubscriptionPlan();
-          const isPro = subscriptionPlan === 'pro';
+          // const isPro = subscriptionPlan === 'pro';
+          const isPro = true;
           const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
           
           const { object } = await generateObject({
@@ -222,7 +223,8 @@ export async function convertTextToResume(prompt: string, existingResume: Resume
       // ADDING TEXT CONTENT TO RESUME
       export async function addTextToResume(prompt: string, existingResume: Resume, config?: AIConfig) {
           const subscriptionPlan = await getSubscriptionPlan();
-          const isPro = subscriptionPlan === 'pro';
+          // const isPro = subscriptionPlan === 'pro';
+          const isPro = true;
           const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
   
           

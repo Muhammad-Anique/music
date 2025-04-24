@@ -39,8 +39,8 @@ import { Textarea } from '@/components/ui/textarea';
 
 
 
-const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
-const MODEL_STORAGE_KEY = 'resumelm-default-model';
+const LOCAL_STORAGE_KEY = 'Auto Talent-api-keys';
+const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
 
 interface ChatBotProps {
   resume: Resume;
