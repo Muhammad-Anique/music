@@ -69,7 +69,7 @@ export default async function ResumesPage({
               <ResumeSortControls />
             </Suspense>
             <Link
-              href="/resumes/new"
+              href="/dashboard/resumes/new"
               className={cn(
                 "inline-flex items-center justify-center",
                 "rounded-full text-sm font-medium",
@@ -90,7 +90,7 @@ export default async function ResumesPage({
           <Suspense fallback={<ResumesLoadingSkeleton />}>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
               {paginatedResumes.map((resume) => (
-                <Link href={`/resumes/${resume.id}`} key={resume.id}>
+                <Link href={`/dashboard/resumes/${resume.id}`} key={resume.id}>
                   <MiniResumePreview
                     name={resume.name}
                     type={resume.is_base_resume ? 'base' : 'tailored'}

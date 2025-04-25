@@ -183,7 +183,7 @@ export function CreateBaseResumeDialog({ children, profile }: CreateBaseResumeDi
             description: "Resume created successfully",
           });
 
-          router.push(`/resumes/${resume.id}`);
+          router.push(`/dashboard/resumes/${resume.id}`);
           setOpen(false);
           return;
         } catch (error: Error | unknown) {

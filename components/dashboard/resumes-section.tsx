@@ -155,7 +155,7 @@ export function ResumesSection({
   // Limit Reached Card Component
   const LimitReachedCard = () => (
     <Link 
-      href="/subscription"
+      href="/dashboard/subscription"
       className={cn(
         "group/limit block",
         "cursor-pointer",
@@ -340,7 +340,7 @@ export function ResumesSection({
                       <div className="group relative">
                         <AlertDialog>
                           <div className="relative">
-                            <Link href={`/resumes/${resume.id}`}>
+                            <Link href={`/dashboard/resumes/${resume.id}`}>
                               <MiniResumePreview
                                 name={resume.name}
                                 type={type}
@@ -438,7 +438,7 @@ export function ResumesSection({
             <div key={resume.id} className="group relative">
               <AlertDialog>
                 <div className="relative">
-                  <Link href={`/resumes/${resume.id}`}>
+                  <Link href={`/dashboard/resumes/${resume.id}`}>
                     <MiniResumePreview
                       name={resume.name}
                       type={type}
