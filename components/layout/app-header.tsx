@@ -62,7 +62,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
                 
                 <div className="flex items-center px-3 py-1">
                   <Link 
-                    href="/profile" 
+                    href="/dashboard/profile" 
                     className={cn(
                       "flex items-center gap-1.5 px-3 py-1",
                       "text-sm font-medium text-purple-600/80 hover:text-purple-800",
@@ -93,7 +93,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
                   <div className="flex flex-col gap-4 pt-6">
                     {showUpgradeButton && <ProUpgradeButton className="w-full" />}
                     <Link
-                      href="/profile"
+                      href="/dashboard/profile"
                       onClick={() => setIsOpen(false)}
                       className={cn(
                         "flex items-center gap-2 px-4 py-2 rounded-md",

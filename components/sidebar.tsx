@@ -22,29 +22,31 @@ export default function Sidebar() {
   };
 
   const links = [
-    { name: 'Home', href: '/dashboard', icon: <Home className="w-5 h-5 mr-2" /> },
-    { name: 'Resume Builder', href: '/dashboard/resume', icon: <FileText className="w-5 h-5 mr-2" /> },
-    { name: 'Cover Letter', href: '/dashboard/cover-letter', icon: <FileSignature className="w-5 h-5 mr-2" /> },
-    { name: 'Email to HR', href: '/dashboard/email-hr', icon: <Mail className="w-5 h-5 mr-2" /> },
+    { name: 'Home', href: '/dashboard', icon: <Home className="w-6 h-6 mr-3" /> },
+    { name: 'Resume Builder', href: '/dashboard/resumes', icon: <FileText className="w-6 h-6 mr-3" /> },
+    { name: 'Cover Letter', href: '/dashboard/cover-letter', icon: <FileSignature className="w-6 h-6 mr-3" /> },
+    { name: 'Email to HR', href: '/dashboard/email-hr', icon: <Mail className="w-6 h-6 mr-3" /> },
   ];
 
   return (
-    <aside className="w-64 h-screen bg-white border-r shadow-sm flex flex-col p-6">
-      <h1 className="text-3xl font-extrabold text-blue-600 mb-8 tracking-tight">Auto Talent</h1>
+    <aside className="w-72 h-screen bg-white border-r shadow-sm flex flex-col p-6">
+      <h1 className="text-3xl font-extrabold text-blue-600 mb-12 tracking-tight">
+        <span className="font-semibold">Auto</span> Talent
+      </h1>
       <nav className="flex-1">
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors ${
                   pathname === link.href
                     ? 'bg-blue-100 text-blue-600'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 {link.icon}
-                {link.name}
+                <span className="font-semibold">{link.name}</span>
               </Link>
             </li>
           ))}
@@ -52,10 +54,10 @@ export default function Sidebar() {
       </nav>
       <button
         onClick={handleLogout}
-        className="mt-8 flex items-center justify-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm"
+        className="mt-12 flex items-center justify-center px-5 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 text-base"
       >
-        <LogOut className="w-4 h-4 mr-2" />
-        Logout
+        <LogOut className="w-5 h-5 mr-2" />
+        <span className="font-semibold">Logout</span>
       </button>
     </aside>
   );

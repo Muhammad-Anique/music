@@ -1,15 +1,4 @@
-/**
- * Home Page Component
- * 
- * This is the main dashboard page of the Resume AI application. It displays:
- * - User profile information
- * - Quick stats (profile score, resume counts, job postings)
- * - Base resume management
- * - Tailored resume management
- * 
- * The page implements a soft gradient minimalism design with floating orbs
- * and mesh overlay for visual interest.
- */
+
 
 import { redirect } from "next/navigation";
 import { countResumes } from "@/utils/actions/resumes/actions";
@@ -27,11 +16,6 @@ import { createClient } from "@/utils/supabase/server";
 import { getDashboardData } from "@/utils/actions";
 import { checkSubscriptionPlan } from "@/utils/actions/stripe/actions";
 
-
-
-
-
-// import ResumeRow from "@/components/dashboard/resume-row";
 
 
 

@@ -52,7 +52,7 @@ const resumeRow= ({ baseResumes, profile, baseSort, baseDirection }: ResumeRowPr
           <div key={resume.id} className="group relative">
             <AlertDialog>
               <div className="relative">
-                <Link href={`/resumes/${resume.id}`}>
+                <Link href={`/dashboard/resumes/${resume.id}`}>
                   <MiniResumePreview
                     name={resume.name}
                     type="base"

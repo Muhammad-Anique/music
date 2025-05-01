@@ -102,7 +102,7 @@ export function ProfileRow({ profile }: ProfileRowProps) {
             </div>
 
             {/* Edit Button with enhanced styling */}
-            <Link href="/profile" className="shrink-0">  
+            <Link href="/dashboard/profile" className="shrink-0">  
               <Button
                 variant="outline"
                 size="sm"

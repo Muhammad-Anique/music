@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { MiniResumePreview } from "@/components/resume/shared/mini-resume-preview";
 import { ResumeSortControls } from "@/components/resume/management/resume-sort-controls";
 import type { SortOption, SortDirection } from "@/components/resume/management/resume-sort-controls";
+import BlurredCircle from '@/components/ui-global/BlurredCircle';
 
 const RESUMES_PER_PAGE = 12;
 
@@ -47,12 +48,19 @@ export default async function ResumesPage({
     (currentPage - 1) * RESUMES_PER_PAGE,
     currentPage * RESUMES_PER_PAGE
   );
-
+ 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50/50 via-sky-50/50 to-violet-50/50">
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Use the imported BlurredCircle component */}
+      <div className="absolute left-[-10%] top-[10%] opacity-50 z-0">
+        <BlurredCircle />
+      </div>
+      <div className="absolute right-[-10%] bottom-[10%] opacity-50 scale-x-[-1] z-0">
+        <BlurredCircle />
+      </div>
 
-      
-      <div className="container max-w-7xl mx-auto p-6 space-y-8">
+      {/* Main content */}
+      <div className="container max-w-7xl mx-auto p-6 space-y-8 relative z-10">
         {/* Header with controls */}
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -85,9 +93,15 @@ export default async function ResumesPage({
           </div>
         </div>
 
+        {/* Add the instruction message */}
+        <div className="text-center text-lg font-medium text-gray-600 mt-8 mb-4">
+          <span className="font-semibold">Select the resume</span> you want to{" "}
+          <span className="font-semibold">edit</span>.
+        </div>
+
         {/* Resumes Grid */}
-        <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 border border-purple-200/50 shadow-xl">
-          <Suspense fallback={<ResumesLoadingSkeleton />}>
+        <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 border border-purple-200/50 shadow-xl z-10">
+          <Suspense fallback={<ResumesLoadingSkeleton />} >
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
               {paginatedResumes.map((resume) => (
                 <Link href={`/dashboard/resumes/${resume.id}`} key={resume.id}>

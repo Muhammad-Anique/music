@@ -35,7 +35,7 @@ export function ResumeList({
       {resumes.map((resume) => (
         <Link
           key={resume.id}
-          href={`/resumes/${resume.id}`}
+          href={`/dashboard/resumes/${resume.id}`}
           className={cn(
             "group relative overflow-hidden rounded-lg border transition-all duration-300",
             "bg-white/50 hover:bg-white/60",
