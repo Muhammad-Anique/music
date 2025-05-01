@@ -153,7 +153,7 @@ export function CreateTailoredResumeDialog({ children, baseResumes, profile }: C
           description: "Resume created successfully",
         });
 
-        router.push(`/resumes/${resume.id}`);
+        router.push(`/dashboard/resumes/${resume.id}`);
         setOpen(false);
         return;
       }
