@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { addTextToResume } from '@/utils/actions/resumes/ai'; // adjust path based on your structure
-import { Resume } from "@/lib/types";
 // import { AIConfig } from '@/types'; // if applicable
 
 export const POST = async (req: NextRequest) => {

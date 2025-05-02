@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { FileText, Trash2, Plus, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from 'react';
-import { readStreamableValue } from 'ai/rsc';
+// import { readStreamableValue } from 'ai/rsc';
 import type { AIConfig } from "@/utils/ai-tools";
 import { AIImprovementPrompt } from "../../shared/ai-improvement-prompt";
-import { generate } from "@/utils/actions/cover-letter/actions";
+// import { generate } from "@/utils/actions/cover-letter/actions";
 import { useResumeContext } from "../resume-editor-context";
 import { ApiErrorDialog } from "@/components/ui/api-error-dialog";
 import { CreateTailoredResumeDialog } from "@/components/resume/management/dialogs/create-tailored-resume-dialog";
@@ -21,7 +21,7 @@ interface CoverLetterPanelProps {
 export function CoverLetterPanel({
   resume,
   job,
-  aiConfig,
+  // aiConfig,
 }: CoverLetterPanelProps) {
   const { dispatch } = useResumeContext();
   const [isGenerating, setIsGenerating] = useState(false);

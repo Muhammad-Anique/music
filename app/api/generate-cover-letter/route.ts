@@ -72,11 +72,14 @@ Cover Letter:
     const coverLetter = data.choices?.[0]?.message?.content?.trim() || "";
 
     return NextResponse.json({ title, context: coverLetter });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API error generating cover letter:", error);
-    return NextResponse.json(
-      { error: error?.message || "Failed to generate cover letter" },
-      { status: 500 }
-    );
+
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Failed to generate cover letter";
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

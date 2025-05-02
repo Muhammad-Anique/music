@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { getCurrentUser } from '@/lib/supabase/getCurrentUser';
+import type { User } from '@supabase/supabase-js';
+
 
 export default function Header() {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {

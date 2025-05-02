@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button"
+// import { Alert, AlertDescription } from "@/components/ui/alert"
+// import { AlertCircle } from "lucide-react"
+// import { Button } from "@/components/ui/button"
+// import Link from "next/link"
+// import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button"
 
 function checkForApiKeys() {
   const storedKeys = localStorage.getItem('Auto Talent-api-keys')

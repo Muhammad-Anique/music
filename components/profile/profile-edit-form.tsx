@@ -1,10 +1,10 @@
 'use client';
 
-import { Profile, WorkExperience, Education, Project } from "@/lib/types";
+import { Profile } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -16,11 +16,11 @@ import { ProfileWorkExperienceForm } from "@/components/profile/profile-work-exp
 import { ProfileProjectsForm } from "@/components/profile/profile-projects-form";
 import { ProfileEducationForm } from "@/components/profile/profile-education-form";
 import { ProfileSkillsForm } from "@/components/profile/profile-skills-form";
-import { formatProfileWithAI } from "../../utils/actions/profiles/ai";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button";
+// import { formatProfileWithAI } from "../../utils/actions/profiles/ai";
+// import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+// import { ProUpgradeButton } from "@/components/settings/pro-upgrade-button";
 import { AlertTriangle } from "lucide-react";
-import { importResume, updateProfile } from "@/utils/actions/profiles/actions";
+import { updateProfile } from "@/utils/actions/profiles/actions";
 
 interface ProfileEditFormProps {
   profile: Profile;
@@ -308,7 +308,7 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
                     >
                       Cancel
                     </Button>
-                    <Button
+                    {/* <Button
                       onClick={() => handleResumeUpload(resumeContent)}
                       disabled={isProcessingResume || !resumeContent.trim()}
                       className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:opacity-90 transition-all duration-500 hover:scale-[1.02] disabled:hover:scale-100"
@@ -324,7 +324,7 @@ export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProp
                           <span>Process with AI</span>
                         </div>
                       )}
-                    </Button>
+                    </Button> */}
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

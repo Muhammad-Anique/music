@@ -60,12 +60,18 @@ export default function SignUp() {
             }
     
             setLoading(false);
-            router.push('/'); 
+            router.push('/dashboard'); 
     
-        } catch (err: any) {
+        } catch (err) {
             setLoading(false);
-            setError(err.message); 
+            
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unexpected error occurred.');
+            }
         }
+        
     };
     
 
