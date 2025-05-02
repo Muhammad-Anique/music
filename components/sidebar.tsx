@@ -1,16 +1,22 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { supabase } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { supabase } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 import {
   Home,
   FileText,
   FileSignature,
   Mail,
+  Globe,
+  // UserCheck,
+  Search,
+  Bookmark,
+  Rocket,
+  Briefcase,
   LogOut,
-} from 'lucide-react';
+} from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -18,18 +24,55 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push('/signin');
+    router.push("/signin");
   };
 
   const links = [
-    { name: 'Home', href: '/dashboard', icon: <Home className="w-6 h-6 mr-3" /> },
-    { name: 'Resume Builder', href: '/dashboard/resumes', icon: <FileText className="w-6 h-6 mr-3" /> },
-    { name: 'Cover Letter', href: '/dashboard/coverletter', icon: <FileSignature className="w-6 h-6 mr-3" /> },
-    { name: 'Email to HR', href: '/dashboard/email-hr', icon: <Mail className="w-6 h-6 mr-3" /> },
+    {
+      name: "Job Hub",
+      href: "/dashboard",
+      icon: <Home className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Resume Builder",
+      href: "/dashboard/resumes",
+      icon: <FileText className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Cover Letter",
+      href: "/dashboard/coverletter",
+      icon: <FileSignature className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Job Interviews",
+      href: "/dashboard/interviews",
+      icon: <Mail className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Interview Buddy",
+      href: "/dashboard/interview-buddy",
+      icon: <Globe className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Search Jobs",
+      href: "/dashboard/search-jobs",
+      icon: <Search className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Saved Jobs",
+      href: "/dashboard/saved-jobs",
+      icon: <Bookmark className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Auto Apply",
+      href: "/dashboard/auto-apply",
+      icon: <Rocket className="w-6 h-6 mr-3" />,
+    },
+    // { name: 'Job Hub', href: '/dashboard/jobhub', icon: <Briefcase className="w-6 h-6 mr-3" /> },
   ];
 
   return (
-    <aside className="w-72 h-screen bg-white border-r shadow-sm flex flex-col p-6">
+    <aside className="w-72 h-screen bg-white border-r border-r-gray-200 shadow-sm flex flex-col p-6">
       <h1 className="text-3xl font-extrabold text-blue-600 mb-12 tracking-tight">
         <span className="font-semibold">Auto</span> Talent
       </h1>
@@ -41,8 +84,8 @@ export default function Sidebar() {
                 href={link.href}
                 className={`flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors ${
                   pathname === link.href
-                    ? 'bg-blue-100 text-blue-600'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? "bg-blue-100 text-blue-600"
+                    : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
                 {link.icon}
