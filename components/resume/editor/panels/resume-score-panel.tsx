@@ -122,33 +122,43 @@ export default function ResumeScorePanel({ resume }: ResumeScorePanelProps) {
   const handleRecalculate = async () => {
     setIsCalculating(true);
     try {
-        const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
-        // const LOCAL_STORAGE_KEY = 'Auto Talent-api-keys';
+      const MODEL_STORAGE_KEY = 'Auto Talent-default-model';
+      const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
   
-        const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
-        // const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);
-        const apiKeys: string[] = [];
-        
-      // Call the generateResumeScore action with current resume
-      const newScore = await generateResumeScore({
-        ...resume,
-        section_configs: undefined,
-        section_order: undefined
-      }, {
-        model: selectedModel || '',
-        apiKeys: apiKeys as unknown as ApiKey[]
+      const response = await fetch('/api/generate-resume-score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          resume: {
+            ...resume,
+            section_configs: undefined,
+            section_order: undefined,
+          },
+          config: {
+            model: selectedModel || '',
+            apiKeys: [], // Or fetch from localStorage if needed
+          },
+        }),
       });
-
+  
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+  
+      const newScore = await response.json();
+  
       // Update state and storage
       setScoreData(newScore as ResumeScoreMetrics);
       updateStoredScores(resume.id, newScore as ResumeScoreMetrics);
     } catch (error) {
-      console.error("Error generating score:", error);
+      console.error("Error generating score via API:", error);
     } finally {
       setIsCalculating(false);
     }
   };
-
+  
   // If no score data is available, show the empty state
   if (!scoreData) {
     return (
