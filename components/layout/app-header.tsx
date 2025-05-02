@@ -1,6 +1,6 @@
 'use client';
 
-import { LogoutButton } from "@/components/auth/logout-button";
+// import { LogoutButton } from "@/components/auth/logout-button";
 import { SettingsButton } from "@/components/settings/settings-button";
 // import { ModelSelector } from "@/components/settings/model-selector";
 import { Logo } from "@/components/ui/logo";
@@ -75,7 +75,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
                   <div className="mx-2 h-4 w-px bg-purple-200/50" />
                   <SettingsButton />
                   <div className="mx-2 h-4 w-px bg-purple-200/50" />
-                  <LogoutButton />
+                  {/* <LogoutButton /> */}
                 </div>
               </nav>
 
@@ -108,7 +108,7 @@ export function AppHeader({ children, showUpgradeButton = true }: AppHeaderProps
                       <SettingsButton className="w-full justify-start" />
                     </div>
                     <div className="px-4">
-                      <LogoutButton className="w-full justify-start" />
+                      {/* <LogoutButton className="w-full justify-start" /> */}
                     </div>
                   </div>
                 </SheetContent>

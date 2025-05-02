@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { createPortalSession } from '@/app/(dashboard)/subscription/stripe-session';
+import { createPortalSession } from '@/app/(autoTalent-app)/dashboard/subscription/stripe-session';
 
 export default function ManageSubscriptionButton() {
   const handleManageSubscription = async () => {

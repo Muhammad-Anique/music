@@ -25,6 +25,7 @@ interface CreateTailoredResumeDialogProps {
   children: React.ReactNode;
   baseResumes?: Resume[];
   profile?: Profile;
+  // company_name?:string;
 }
 
 export function CreateTailoredResumeDialog({ children, baseResumes, profile }: CreateTailoredResumeDialogProps) {
@@ -108,7 +109,7 @@ export function CreateTailoredResumeDialog({ children, baseResumes, profile }: C
             
             jobId = jobEntry.id;
             jobTitle = formattedJobListing.position_title || 'Copied Resume';
-            companyName = formattedJobListing.company_name || '';
+            companyName = formattedJobListing?.company || '';
           } catch (error: Error | unknown) {
             if (error instanceof Error && (
                 error.message.toLowerCase().includes('api key') || 
@@ -250,7 +251,7 @@ export function CreateTailoredResumeDialog({ children, baseResumes, profile }: C
         baseResume,
         jobEntry.id,
         formattedJobListing.position_title || '',
-        formattedJobListing.company_name || '',
+        formattedJobListing.company || '',
         tailoredContent,
       );
 

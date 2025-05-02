@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-import { LogoutButton } from "@/components/auth/logout-button";
+// import { LogoutButton } from "@/components/auth/logout-button";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -47,7 +47,7 @@ export function Navbar() {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
-          <LogoutButton />
+          {/* <LogoutButton /> */}
         </div>
       </div>
     </nav>
