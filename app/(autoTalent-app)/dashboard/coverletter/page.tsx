@@ -77,9 +77,15 @@ const CoverLettersPage = () => {
   
       await fetchCoverLetters();
       setIsModalOpen(false);
-    } catch (error: any) {
-      console.error("Error generating/saving cover letter:", error.message);
-      setError(error.message);
+    } catch (err) {
+      setLoading(false);
+      
+      if (err instanceof Error) {
+          setError(err.message);
+      } else {
+          setError('An unexpected error occurred.');
+      }
+  
     } finally {
       setLoading(false);
     }

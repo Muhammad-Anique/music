@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { User, Linkedin, Briefcase, GraduationCap, Wrench, FolderGit2, Upload, Save, Trash2, ChevronDown, X } from "lucide-react";
+import { User, Linkedin, Briefcase, GraduationCap, Wrench, FolderGit2, Upload, Save, ChevronDown, } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 import { ProfileBasicInfoForm } from "@/components/profile/profile-basic-info-form";
@@ -29,12 +29,13 @@ interface ProfileEditFormProps {
 export function ProfileEditForm({ profile: initialProfile }: ProfileEditFormProps) {
   const [profile, setProfile] = useState(initialProfile);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isResetting, setIsResetting] = useState(false);
+  // const [isResetting, setIsResetting] = useState(false);
   const [isResumeDialogOpen, setIsResumeDialogOpen] = useState(false);
-  const [isTextImportDialogOpen, setIsTextImportDialogOpen] = useState(false);
+  const isTextImportDialogOpen = false; // Placeholder for text import dialog state
+  // const [isTextImportDialogOpen, setIsTextImportDialogOpen] = useState(false);
   const [resumeContent, setResumeContent] = useState("");
-  const [textImportContent, setTextImportContent] = useState("");
-  const [isProcessingResume, setIsProcessingResume] = useState(false);
+  // const [textImportContent, setTextImportContent] = useState("");
+  // const [isProcessingResume, setIsProcessingResume] = useState(false);
   const [apiKeyError, setApiKeyError] = useState("");
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const router = useRouter();
