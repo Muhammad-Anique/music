@@ -1,43 +1,61 @@
 // app/api/generate-cover-letter/route.ts
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { job, resume, customPrompt } = body;
+    const { title, jobDescription, tone } = body;
 
-    const prompt = `Write a professional cover letter for the following job using my resume information:
-${JSON.stringify(job)}
+    if (!jobDescription || typeof tone !== "number") {
+      return NextResponse.json(
+        { error: "Missing required fields: jobDescription and tone." },
+        { status: 400 }
+      );
+    }
 
-${JSON.stringify(resume)}
+    const toneDescriptionMap: Record<number, string> = {
+      1: "formal",
+      2: "friendly",
+      3: "enthusiastic",
+      4: "confident",
+      5: "humble",
+    };
 
-Today's date is ${new Date().toLocaleDateString()}.
+    const toneLabel = toneDescriptionMap[tone] || "professional";
 
-Please use my contact information in the letter:
-Full Name: ${resume.first_name} ${resume.last_name}
-Email: ${resume.email}
-${resume.phone_number ? `Phone: ${resume.phone_number}` : ''}
-${resume.linkedin_url ? `LinkedIn: ${resume.linkedin_url}` : ''}
-${resume.github_url ? `GitHub: ${resume.github_url}` : ''}
+    const prompt = `
+You are a skilled career assistant. Generate a high-quality, professional cover letter for the following job description. 
 
-${customPrompt ? `\nAdditional requirements: ${customPrompt}` : ''}`;
+- Write in a ${toneLabel} tone.
+- Keep the letter concise, ideally one page.
+- Make sure it sounds human-written and tailored to the role.
+- Use today's date: ${new Date().toLocaleDateString()}.
+- Start with "Dear Hiring Manager" and avoid generic filler.
+- Focus on why the applicant is a great fit.
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
+Job Description:
+${jobDescription}
+
+Cover Letter:
+`;
+
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.OPENAI_API_KEY!}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4', // or 'gpt-3.5-turbo' if you're not using GPT-4
+        model: "gpt-4", // or "gpt-3.5-turbo"
         messages: [
           {
-            role: 'system',
-            content: 'You are an expert career assistant helping generate cover letters.',
+            role: "system",
+            content:
+              "You are an expert career assistant who writes compelling cover letters tailored to job descriptions.",
           },
           {
-            role: 'user',
+            role: "user",
             content: prompt,
           },
         ],
@@ -47,17 +65,17 @@ ${customPrompt ? `\nAdditional requirements: ${customPrompt}` : ''}`;
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error?.message || 'Failed to get response from OpenAI');
+      throw new Error(errorData.error?.message || "OpenAI API error");
     }
 
     const data = await response.json();
-    const coverLetter = data.choices?.[0]?.message?.content || '';
+    const coverLetter = data.choices?.[0]?.message?.content?.trim() || "";
 
-    return NextResponse.json({ coverLetter });
+    return NextResponse.json({ title, context: coverLetter });
   } catch (error: any) {
-    console.error('API error generating cover letter:', error);
+    console.error("API error generating cover letter:", error);
     return NextResponse.json(
-      { message: error?.message || 'Failed to generate cover letter' },
+      { error: error?.message || "Failed to generate cover letter" },
       { status: 500 }
     );
   }

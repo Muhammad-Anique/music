@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { AlertCircle, Clock, ArrowDownToLine, Lock } from 'lucide-react';
-import { createPortalSession } from '@/app/(dashboard)/subscription/stripe-session';
 import { PricingCard, type Plan } from './pricing-card';
+import { createPortalSession } from '@/app/(autoTalent-app)/dashboard/subscription/stripe-session';
+
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 

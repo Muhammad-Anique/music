@@ -24,7 +24,7 @@ export default function Sidebar() {
   const links = [
     { name: 'Home', href: '/dashboard', icon: <Home className="w-6 h-6 mr-3" /> },
     { name: 'Resume Builder', href: '/dashboard/resumes', icon: <FileText className="w-6 h-6 mr-3" /> },
-    { name: 'Cover Letter', href: '/dashboard/cover-letter', icon: <FileSignature className="w-6 h-6 mr-3" /> },
+    { name: 'Cover Letter', href: '/dashboard/coverletter', icon: <FileSignature className="w-6 h-6 mr-3" /> },
     { name: 'Email to HR', href: '/dashboard/email-hr', icon: <Mail className="w-6 h-6 mr-3" /> },
   ];
 

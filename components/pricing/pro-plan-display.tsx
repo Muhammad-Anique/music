@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Sparkles, Star, Trophy } from 'lucide-react';
-import { createPortalSession } from '@/app/(dashboard)/subscription/stripe-session';
+import { createPortalSession } from '@/app/(autoTalent-app)/dashboard/subscription/stripe-session';
 import { PricingCard, type Plan } from './pricing-card';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
