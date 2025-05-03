@@ -57,11 +57,26 @@ const EditCoverLetterPage: FC = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-    doc.text(coverLetter.title, 10, 10);
-    doc.text(editedContent, 10, 20);
-    doc.save(`${coverLetter.title}.pdf`);
-  };
 
+    // Add title with larger font size
+    doc.setFontSize(16);
+    doc.text(coverLetter.title, 10, 20);
+
+    // Add content with word wrapping
+    doc.setFontSize(12);
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+    const maxWidth = pageWidth - margin * 2; // Calculate max width for text
+    const lineHeight = 10;
+
+    doc.text(editedContent, margin, 40, {
+        maxWidth: maxWidth,
+        lineHeightFactor: lineHeight / 12,
+    });
+
+    // Save the PDF
+    doc.save(`${coverLetter.title}.pdf`);
+};
   // Loading or error state handling
   if (!id) return <p>Loading...</p>;
   if (loading) return <p>Loading cover letter...</p>;

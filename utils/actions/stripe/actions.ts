@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 // Initialize stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-12-18.acacia'
+  apiVersion: '2025-03-31.basil'
 });
 
 // Create or retrieve a Stripe customer
@@ -100,11 +100,11 @@ export async function manageSubscriptionStatusChange(
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ['default_payment_method', 'items.data.price']
   });
-  console.log('✅ Retrieved subscription details:', {
-    id: subscription.id,
-    status: subscription.status,
-    currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
-  });
+  // console.log('✅ Retrieved subscription details:', {
+  //   id: subscription.id,
+  //   status: subscription.status,
+  //   currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString()
+  // });
 
   // Map price ID to plan
   const priceIdToPlan: Record<string, 'free' | 'pro'> = {
@@ -119,7 +119,7 @@ export async function manageSubscriptionStatusChange(
     stripe_customer_id: customerId,
     subscription_plan: plan,
     subscription_status: subscription.cancel_at_period_end ? 'canceled' : subscription.status === 'active' ? 'active' : 'canceled',
-    current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+    // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
     trial_end: subscription.trial_end 
       ? new Date(subscription.trial_end * 1000).toISOString()
       : null,

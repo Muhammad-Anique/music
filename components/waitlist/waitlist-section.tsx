@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Sparkles, Mail, User, CheckCircle2, XCircle } from "lucide-react";
-import { joinWaitlist } from "@/app/auth/login/actions";
+import { joinWaitlist } from "@/app/(auth)/signin/actions";
 import { useState } from "react";
 
 const gradientClasses = {
