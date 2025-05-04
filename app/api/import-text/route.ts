@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
 
     const schema = z.object({
       content: z.string(),
-      resume: z.any(), // or better: z.custom<Resume>(),
+      resume: z.any(), 
     });
 
     const { content, resume } = schema.parse(body);

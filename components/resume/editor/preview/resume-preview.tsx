@@ -13,7 +13,8 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { useState, useEffect, memo, useMemo } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { ResumePDFDocument } from './resume-pdf-document';
-// import { useDebouncedValue } from '@/hooks/use-debounced-value';
+import { useDebouncedValue } from '@/hooks/use-debounced-value';
+import { useCallback } from 'react';
 
 // Import required CSS for react-pdf
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -112,15 +113,15 @@ export const ResumePreview = memo(function ResumePreview({ resume, variant = 'ba
   console.log(containerWidth);
   const [url, setUrl] = useState<string | null>(null);
   const [numPages, setNumPages] = useState<number>(0);
-  // const debouncedWidth = useDebouncedValue(containerWidth, 1000);
+  const debouncedWidth = useDebouncedValue(containerWidth, 1000);
 
   // Convert percentage to pixels based on parent container
-  // const getPixelWidth = useCallback(() => {
-  //   if (typeof window === 'undefined') return 0;
-  //   // console.log('debouncedWidth (INSIDE)'+containerWidth);
-  //   // console.log('debouncedWidth * 10 (INSIDE)'+debouncedWidth * 10);
-  //   return ((debouncedWidth));
-  // }, [debouncedWidth]);
+  const getPixelWidth = useCallback(() => {
+    if (typeof window === 'undefined') return 0;
+    // console.log('debouncedWidth (INSIDE)'+containerWidth);
+    // console.log('debouncedWidth * 10 (INSIDE)'+debouncedWidth * 10);
+    return ((debouncedWidth));
+  }, [debouncedWidth]);
 
   // Generate resume hash for caching
   const resumeHash = useMemo(() => generateResumeHash(resume), [resume]);
@@ -325,7 +326,7 @@ export const ResumePreview = memo(function ResumePreview({ resume, variant = 'ba
               key={`page_${index + 1}`}
               pageNumber={index + 1}
               className="mb-4 shadow-xl "
-              width={1000} // Convert percentage to pixels
+              width={getPixelWidth()} // Convert percentage to pixels
               renderAnnotationLayer={true}
               renderTextLayer={shouldRenderTextLayer}
             />
