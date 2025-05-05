@@ -19,7 +19,8 @@ export async function tailorResumeToJob(
   config?: AIConfig
 ) {
   const { plan, id } = await getSubscriptionPlan(true);
-  const isPro = plan === 'pro';
+  // const isPro = plan === 'pro';
+  const isPro = true;
   const aiClient = isPro ? initializeAIClient(config, isPro, true) : initializeAIClient(config);
 // Check rate limit
   await checkRateLimit(id);

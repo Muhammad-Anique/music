@@ -16,6 +16,7 @@ import {
   Rocket,
   LogOut,
   Brain,
+  Briefcase,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -44,9 +45,14 @@ export default function Sidebar() {
       icon: <FileSignature className="w-6 h-6 mr-3" />,
     },
     {
-      name: "Job Interviews",
-      href: "/dashboard/interviews",
+      name: "Email To HR",
+      href: "/dashboard/follow-up-email",
       icon: <Mail className="w-6 h-6 mr-3" />,
+    },
+    {
+      name: "Job Interviews",
+      href: "/dashboard/interview-questions",
+      icon: <Briefcase className="w-6 h-6 mr-3" />,
     },
     {
       name: "Interview Buddy",
@@ -63,6 +69,7 @@ export default function Sidebar() {
       href: "/dashboard/saved-jobs",
       icon: <Bookmark className="w-6 h-6 mr-3" />,
     },
+
     {
       name: "Auto Apply",
       href: "/dashboard/auto-apply",

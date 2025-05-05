@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import Header from '@/components/header';
+import { Loader, Loader2Icon } from 'lucide-react';
 
 export default function SignIn() {
   const router = useRouter();
@@ -36,10 +37,10 @@ export default function SignIn() {
       password: form.password,
     });
 
-    setLoading(false);
-
+    
     if (signInError) {
       setError(signInError.message);
+      setLoading(false);
     } else {
       router.push('/dashboard'); // Redirect after successful sign in
     }
@@ -48,7 +49,7 @@ export default function SignIn() {
   return (
     <div className='bg-gradient-to-b from-[#38b6ff] via-blue-300 to-blue-400'>
       <Header />
-      <div className="flex justify-center items-center min-h-screen  px-4">
+      {!loading ? (<div className="flex justify-center items-center min-h-screen  px-4">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
@@ -98,6 +99,15 @@ export default function SignIn() {
           </button>
         </form>
       </div>
+      ) : (
+        <div className="flex justify-center items-center min-h-screen">
+          <p className="text-white text-lg flex flex-row items-center gap-2"><span >
+            <Loader2Icon className='h-6 w-6 animate-spin'/>
+            </span>
+            Loading...
+            </p>
+        </div>
+      )}
     </div>
   );
 }

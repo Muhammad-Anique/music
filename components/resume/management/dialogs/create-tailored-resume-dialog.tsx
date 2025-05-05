@@ -20,6 +20,7 @@ import { BaseResumeSelector } from "../base-resume-selector";
 import { ImportMethodRadioGroup } from "../import-method-radio-group";
 import { JobDescriptionInput } from "../job-description-input";
 import { ApiErrorDialog } from "@/components/ui/api-error-dialog";
+import { tail } from "lodash";
 
 interface CreateTailoredResumeDialogProps {
   children: React.ReactNode;
@@ -217,10 +218,31 @@ export function CreateTailoredResumeDialog({ children, baseResumes, profile }: C
       let tailoredContent;
 
       try {
-        tailoredContent = await tailorResumeToJob(baseResume, formattedJobListing, {
-          model: selectedModel || '',
-          apiKeys
-        });
+        const response = await fetch('/api/tailor-resume', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            resume: baseResume,
+            jobListing: formattedJobListing,
+            config: {
+              model: 'gpt-4o-mini',
+              apiKeys: [
+                {
+                  service: 'openai',
+                  key: process.env.NEXT_PUBLIC_OPENAI_API_KEY!, // Only use NEXT_PUBLIC if it's safe to expose
+                },
+              ],
+            },
+          }),
+        })
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error(data.message || 'Failed to tailor resume');
+        }
+        tailoredContent = data.resume;
+      
       } catch (error: Error | unknown) {
         if (error instanceof Error && (
             error.message.toLowerCase().includes('api key') || 
