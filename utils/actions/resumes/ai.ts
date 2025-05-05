@@ -114,6 +114,15 @@ export async function convertTextToResume(prompt: string, existingResume: Resume
       export async function improveWorkExperience(point: string, customPrompt?: string, config?: AIConfig) {
           const subscriptionPlan = await getSubscriptionPlan();
           const isPro = subscriptionPlan === 'pro';
+          config = {
+            model: 'gpt-4o-mini',
+            apiKeys: [
+              {
+                service: 'openai',
+                key: process.env.OPENAI_API_KEY!,
+              },
+            ],
+          }
           const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
           
           const { object } = await generateObject({
