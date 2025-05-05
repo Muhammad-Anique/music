@@ -14,8 +14,8 @@ import {
   Search,
   Bookmark,
   Rocket,
-  Briefcase,
   LogOut,
+  Brain,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -72,19 +72,22 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-72 h-screen bg-white border-r border-r-gray-200 shadow-sm flex flex-col p-6">
-      <h1 className="text-3xl font-extrabold text-blue-600 mb-12 tracking-tight">
-        <span className="font-semibold">Auto</span> Talent
+    <aside className="w-72 h-screen  bg-white border-r border-r-gray-200 shadow-lg flex flex-col p-6">
+      <h1 className="text-3xl font-extrabold text-center text-[#38b6ff] flex flex-row items-center justify-center  gap-0 mb-9 tracking-tight">
+       <Brain className="w-10 h-10 mr-2" /> 
+        <span className="text-center">
+          autotalent
+        </span>
       </h1>
       <nav className="flex-1">
-        <ul className="space-y-3">
+        <ul className="space-y-1">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`flex items-center px-4 py-3 rounded-md text-base font-medium transition-colors ${
+                className={`flex items-center px-4 py-3 rounded-md text-sm font-medium transition-colors ${
                   pathname === link.href
-                    ? "bg-blue-100 text-blue-600"
+                    ? "bg-gray-100 text-[#38b6ff]"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
@@ -97,7 +100,7 @@ export default function Sidebar() {
       </nav>
       <button
         onClick={handleLogout}
-        className="mt-12 flex items-center justify-center px-5 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 text-base"
+        className="mt-12 flex items-center justify-center px-5 py-3 bg-[#38b6ff] text-white rounded-md hover:bg-blue-500 text-base"
       >
         <LogOut className="w-5 h-5 mr-2" />
         <span className="font-semibold">Logout</span>

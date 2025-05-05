@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { MiniResumePreview } from "@/components/resume/shared/mini-resume-preview";
 import { ResumeSortControls } from "@/components/resume/management/resume-sort-controls";
 import type { SortOption, SortDirection } from "@/components/resume/management/resume-sort-controls";
-import BlurredCircle from '@/components/ui-global/BlurredCircle';
 
 const RESUMES_PER_PAGE = 12;
 
@@ -52,19 +51,19 @@ export default async function ResumesPage({
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Use the imported BlurredCircle component */}
-      <div className="absolute left-[-10%] top-[10%] opacity-50 z-0">
+      {/* <div className="absolute left-[-10%] top-[10%] opacity-50 z-0">
         <BlurredCircle />
       </div>
       <div className="absolute right-[-10%] bottom-[10%] opacity-50 scale-x-[-1] z-0">
         <BlurredCircle />
-      </div>
+      </div> */}
 
       {/* Main content */}
       <div className="container max-w-7xl mx-auto p-6 space-y-8 relative z-10">
         {/* Header with controls */}
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <h1 className="text-3xl font-semibold tracking-tight bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-semibold tracking-tight bg-gradient-to-r from-[#38b6ff] via-blue-500 to-blue-700 bg-clip-text text-transparent">
               My Resumes
             </h1>
             <p className="text-muted-foreground">
@@ -82,7 +81,7 @@ export default async function ResumesPage({
                 "inline-flex items-center justify-center",
                 "rounded-full text-sm font-medium",
                 "transition-all duration-500",
-                "bg-gradient-to-r from-purple-600 to-pink-600",
+                "bg-gradient-to-r from-[#38b6ff] via-blue-500 to-blue-700",
                 "text-white hover:shadow-lg hover:shadow-purple-500/25",
                 "hover:-translate-y-0.5",
                 "h-10 px-6"

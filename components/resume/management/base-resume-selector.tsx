@@ -20,7 +20,7 @@ export function BaseResumeSelector({
       <SelectTrigger 
         id="base-resume" 
         className={cn(
-          "bg-white/80 border-gray-200 h-10 text-sm focus:border-pink-500 focus:ring-pink-500/20",
+          "bg-white/80 border-gray-200 h-10 text-sm focus:border-[#38b6ff] focus:ring-[#38b6ff]/20",
           isInvalid && "border-red-500 shake"
         )}
       >

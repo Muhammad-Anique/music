@@ -46,9 +46,9 @@ export default function SignIn() {
   };
 
   return (
-    <>
+    <div className='bg-gradient-to-b from-[#38b6ff] via-blue-300 to-blue-400'>
       <Header />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <div className="flex justify-center items-center min-h-screen  px-4">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
@@ -69,7 +69,7 @@ export default function SignIn() {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#38b6ff]"
               required
             />
           </div>
@@ -84,7 +84,7 @@ export default function SignIn() {
               name="password"
               value={form.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#38b6ff]"
               required
             />
           </div>
@@ -98,6 +98,6 @@ export default function SignIn() {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
