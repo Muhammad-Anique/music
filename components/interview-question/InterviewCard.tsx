@@ -27,7 +27,7 @@ export default function InterviewCard({
         <p className="text-gray-600 mb-4 line-clamp-3">{description}</p>
 
         <Link
-          href={`/dashboard/interviewquestions/${id}`}
+          href={`/dashboard/interview-questions/${id}`}
           className={`block text-center py-2 px-4 rounded-md font-medium transition-all duration-300 ease-in-out ${
             isHovered ? "bg-blue-600 text-white" : "bg-blue-100 text-blue-700"
           }`}

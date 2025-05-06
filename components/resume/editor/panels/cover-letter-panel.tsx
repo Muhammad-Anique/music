@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { FileText, Trash2, Plus, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from 'react';
-// import { readStreamableValue } from 'ai/rsc';
+import { readStreamableValue } from 'ai/rsc';
 import type { AIConfig } from "@/utils/ai-tools";
 import { AIImprovementPrompt } from "../../shared/ai-improvement-prompt";
-// import { generate } from "@/utils/actions/cover-letter/actions";
+import { generate } from "@/utils/actions/cover-letter/actions";
 import { useResumeContext } from "../resume-editor-context";
 import { ApiErrorDialog } from "@/components/ui/api-error-dialog";
 import { CreateTailoredResumeDialog } from "@/components/resume/management/dialogs/create-tailored-resume-dialog";
@@ -21,7 +21,7 @@ interface CoverLetterPanelProps {
 export function CoverLetterPanel({
   resume,
   job,
-  // aiConfig,
+  aiConfig,
 }: CoverLetterPanelProps) {
   const { dispatch } = useResumeContext();
   const [isGenerating, setIsGenerating] = useState(false);
@@ -39,26 +39,64 @@ export function CoverLetterPanel({
 
   const generateCoverLetter = async () => {
     if (!job) return;
-  
+    
     setIsGenerating(true);
-  
+    
     try {
-      const response = await fetch('/api/generate-cover-letter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resume, job, customPrompt }),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Cover letter generation failed');
+      // Get model and API key from local storage
+      const MODEL_STORAGE_KEY = 'resumelm-default-model';
+      const LOCAL_STORAGE_KEY = 'resumelm-api-keys';
+
+      const selectedModel = localStorage.getItem(MODEL_STORAGE_KEY);
+      const storedKeys = localStorage.getItem(LOCAL_STORAGE_KEY);
+      let apiKeys = [];
+
+      try {
+        apiKeys = storedKeys ? JSON.parse(storedKeys) : [];
+      } catch (error) {
+        console.error('Error parsing API keys:', error);
       }
-  
-      const data = await response.json();
-      updateField('cover_letter', {
-        content: data.coverLetter,
+
+      // Prompt
+      const prompt = `Write a professional cover letter for the following job using my resume information:
+      ${JSON.stringify(job)}
+      
+      ${JSON.stringify(resume)}
+      
+      Today's date is ${new Date().toLocaleDateString()}.
+
+      Please use my contact information in the letter:
+      Full Name: ${resume.first_name} ${resume.last_name}
+      Email: ${resume.email}
+      ${resume.phone_number ? `Phone: ${resume.phone_number}` : ''}
+      ${resume.linkedin_url ? `LinkedIn: ${resume.linkedin_url}` : ''}
+      ${resume.github_url ? `GitHub: ${resume.github_url}` : ''}
+
+      ${customPrompt ? `\nAdditional requirements: ${customPrompt}` : ''}`;
+      
+
+      // Call The Model
+      const { output } = await generate(prompt, {
+        ...aiConfig,
+        model: selectedModel || '',
+        apiKeys
       });
-  
+
+      // Generated Content
+      let generatedContent = '';
+
+
+      // Update Resume Context
+      for await (const delta of readStreamableValue(output)) {
+        generatedContent += delta;
+        // Update resume context directly
+        // console.log('Generated Content:', generatedContent);
+        updateField('cover_letter', {
+          content: generatedContent,
+        });
+      }
+      
+      
     } catch (error: Error | unknown) {
       console.error('Generation error:', error);
       if (error instanceof Error && (

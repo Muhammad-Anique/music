@@ -396,6 +396,15 @@ export async function generateResumeScore(
   const subscriptionPlan = await getSubscriptionPlan();
   // const isPro = subscriptionPlan === 'pro';
   const isPro = true; // TODO: REMOVE THIS LINE LATER
+  config = {
+    model: "gpt-4o-mini",
+    apiKeys: [
+      {
+        service: "openai",
+        key: process.env.OPENAI_API_KEY!,
+      },
+    ],
+  };
   const aiClient = isPro ? initializeAIClient(config, true) : initializeAIClient(config);
 
 

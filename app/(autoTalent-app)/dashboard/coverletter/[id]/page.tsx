@@ -57,26 +57,45 @@ const EditCoverLetterPage: FC = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-
-    // Add title with larger font size
-    doc.setFontSize(16);
-    doc.text(coverLetter.title, 10, 20);
-
-    // Add content with word wrapping
-    doc.setFontSize(12);
+  
     const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 10;
-    const maxWidth = pageWidth - margin * 2; // Calculate max width for text
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
     const lineHeight = 10;
-
-    doc.text(editedContent, margin, 40, {
-        maxWidth: maxWidth,
-        lineHeightFactor: lineHeight / 12,
+    const maxWidth = pageWidth - margin * 2;
+  
+    // Draw a colored header background
+    doc.setFillColor(63, 81, 181); // Indigo 500
+    doc.rect(0, 0, pageWidth, 30, 'F');
+  
+    // Title styling
+    doc.setTextColor(255, 255, 255); // White
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text(coverLetter.title, margin, 20);
+  
+    // Reset for body text
+    doc.setTextColor(33, 33, 33); // Almost black
+    doc.setFontSize(12);
+    doc.setFont('times', 'normal');
+  
+    // Add body text with better spacing
+    doc.text(editedContent, margin, 50, {
+      maxWidth: maxWidth,
+      lineHeightFactor: 1.6,
     });
-
+  
+    // Optional: draw a footer line
+    doc.setDrawColor(200);
+    doc.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+    doc.setFontSize(10);
+    doc.setTextColor(120);
+    // doc.text('Generated with love ❤️ using jsPDF', margin, pageHeight - 10);
+  
     // Save the PDF
     doc.save(`${coverLetter.title}.pdf`);
-};
+  };
+  
   // Loading or error state handling
   if (!id) return <p>Loading...</p>;
   if (loading) return <p>Loading cover letter...</p>;

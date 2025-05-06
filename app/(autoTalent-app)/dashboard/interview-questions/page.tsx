@@ -12,7 +12,7 @@ type InterviewItem = {
 
 export default function InterviewPage() {
   const [interviewList, setInterviewList] = useState<InterviewItem[]>([]);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false); // <-- Default is false now
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
 
@@ -99,7 +99,7 @@ export default function InterviewPage() {
 
         setJobTitle("");
         setJobDescription("");
-        setShowModal(false);
+        setShowModal(false); // close modal after submit
       }
     } catch (err) {
       console.error("API call failed:", err);
@@ -108,9 +108,20 @@ export default function InterviewPage() {
 
   return (
     <>
+      {/* Create New Button */}
+      <div className="p-6">
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-300"
+        >
+          + Create New
+        </button>
+      </div>
+
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-blur bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-md w-full">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-xl">
             <h2 className="text-xl font-semibold mb-4">
               Generate Interview Test
             </h2>
@@ -133,21 +144,22 @@ export default function InterviewPage() {
               />
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-all duration-300 ease-in-out"
+                className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-all duration-300"
               >
                 Generate Test
               </button>
             </form>
             <button
               onClick={() => setShowModal(false)}
-              className="mt-4 w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 transition-all duration-300 ease-in-out"
+              className="mt-4 w-full bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400 transition-all duration-300"
             >
-              Close
+              Cancel
             </button>
           </div>
         </div>
       )}
 
+      {/* Interview Cards */}
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {interviewList.map(({ id, title, description }) => (
           <InterviewCard

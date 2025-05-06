@@ -14,7 +14,7 @@ const EmailCard: FC<EmailCardProps> = ({ id, subject, body }) => {
       <h3 className="text-xl font-semibold">{subject}</h3>
       <p className="text-sm text-gray-600 mt-2">{body.slice(0, 100)}...</p>
       <Link
-        href={`/dashboard/emailHR/${id}`}
+        href={`/dashboard/follow-up-email/${id}`}
         className="text-blue-500 mt-4 inline-block"
       >
         View Full Email
