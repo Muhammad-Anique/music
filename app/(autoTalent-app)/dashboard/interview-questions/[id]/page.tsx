@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 export default function InterviewDetailPage() {
   const { id } = useParams();
+  const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [evaluationResult, setEvaluationResult] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -23,7 +27,6 @@ export default function InterviewDetailPage() {
         return;
       }
 
-      // Ensure questions is parsed if it's stored as a string
       let parsedQuestions = data.questions;
       if (typeof parsedQuestions === "string") {
         try {
@@ -43,6 +46,10 @@ export default function InterviewDetailPage() {
     fetchInterview();
   }, [id]);
 
+  const handleEvaluate = async () => {
+    router.push(`/dashboard/interview-questions/${id}/evaluation`);
+  };
+
   if (!data) return <p>Loading...</p>;
 
   return (
@@ -57,6 +64,18 @@ export default function InterviewDetailPage() {
               <p className="text-gray-600">{q.answer}</p>
             </div>
           ))}
+      </div>
+      <div className="mt-6">
+        <Button
+          onClick={handleEvaluate}
+          disabled={loading}
+          className="bg-blue-900 text-white"
+        >
+          {loading ? "Evaluating..." : "Take Test"}
+        </Button>
+        {evaluationResult && (
+          <p className="mt-4 text-green-600">{evaluationResult}</p>
+        )}
       </div>
     </div>
   );
