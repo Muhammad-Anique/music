@@ -83,7 +83,15 @@ Transform the resume according to these principles, ensuring the final output is
 
 export async function formatJobListing(jobListing: string, config?: AIConfig) {
   const { plan, id } = await getSubscriptionPlan(true);
-  console.log("id", id);
+  config = {
+    model: "gpt-4o-mini",
+    apiKeys: [
+      {
+        service: "openai",
+        key: process.env.OPENAI_API_KEY!,
+      },
+    ],
+  };
   const isPro = true;
   // const isPro = plan === 'pro';
   const aiClient = isPro
