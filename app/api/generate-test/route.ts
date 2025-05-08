@@ -81,6 +81,7 @@ Return only a JSON array of questions with answers like:
     let parsedQuestions;
     try {
       parsedQuestions = JSON.parse(rawContent);
+      console.log(parsedQuestions)
     } catch (err) {
       throw new Error("Failed to parse the OpenAI response into JSON.");
     }

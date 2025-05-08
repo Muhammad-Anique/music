@@ -2,23 +2,25 @@ import { getDashboardData } from "@/utils/actions";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 import { MiniResumePreview } from "@/components/resume/shared/mini-resume-preview";
 import { ResumeSortControls } from "@/components/resume/management/resume-sort-controls";
 import type { SortOption, SortDirection } from "@/components/resume/management/resume-sort-controls";
+import IsLoadingFalseforDashboard from "@/components/dashboard/isLoadingFalseforDashboard";
+
 
 const RESUMES_PER_PAGE = 12;
 
 type SearchParams = { [key: string]: string | string[] | undefined }
 
 export default async function ResumesPage({
+
   searchParams,
 }: {
   searchParams: Promise<SearchParams>
 }) {
   const params = await searchParams;
-  
+
   const { baseResumes, tailoredResumes } = await getDashboardData();
   
   // Combine and sort resumes
@@ -50,6 +52,7 @@ export default async function ResumesPage({
  
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+      <IsLoadingFalseforDashboard />
       {/* Use the imported BlurredCircle component */}
       {/* <div className="absolute left-[-10%] top-[10%] opacity-50 z-0">
         <BlurredCircle />
@@ -70,7 +73,7 @@ export default async function ResumesPage({
               Manage all your resumes in one place
             </p>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Suspense>
               <ResumeSortControls />
@@ -100,13 +103,13 @@ export default async function ResumesPage({
 
         {/* Resumes Grid */}
         <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 border border-purple-200/50 shadow-xl z-10">
-          <Suspense fallback={<ResumesLoadingSkeleton />} >
+          <Suspense fallback={<ResumesLoadingSkeleton />}>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
               {paginatedResumes.map((resume) => (
                 <Link href={`/dashboard/resumes/${resume.id}`} key={resume.id}>
                   <MiniResumePreview
                     name={resume.name}
-                    type={resume.is_base_resume ? 'base' : 'tailored'}
+                    type={resume.is_base_resume ? "base" : "tailored"}
                     target_role={resume.target_role}
                     updatedAt={resume.updated_at}
                     className="hover:-translate-y-1 transition-transform duration-300"

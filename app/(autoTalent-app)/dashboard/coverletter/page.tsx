@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 import CoverLetterCard from "@/components/cover-letter/CoverLetterCard";
 import CoverLetterFormModal from "@/components/cover-letter/CoverLetterFormModal";
-
+import { useLoading } from "@/context/LoadingContext";
 interface CoverLetter {
   id: string;
   title: string;
@@ -16,7 +16,7 @@ const CoverLettersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const { setIsLoading } = useLoading();
   const fetchCoverLetters = async () => {
     const { data, error } = await supabase.from("cover_letters").select("*");
     if (data) setCoverLetters(data as CoverLetter[]);
@@ -24,7 +24,10 @@ const CoverLettersPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(false);
     fetchCoverLetters();
+
+    
   }, []);
 
   const handleCreateCoverLetter = async (
@@ -97,20 +100,20 @@ const CoverLettersPage = () => {
       <h1 className="text-3xl font-semibold mb-6">Cover Letters</h1>
 
       {error && (
-        <div className="bg-red-100 text-red-700 px-4 py-2 rounded">
-          {error}
-        </div>
+        <div className="bg-red-100 text-red-700 px-4 py-2 rounded">{error}</div>
       )}
 
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg mb-4"
+        className="px-4 py-2 hover:bg-blue-500 bg-[#38b6ff] text-white rounded-lg mb-4"
         disabled={loading}
       >
         {loading ? "Generating..." : "New Cover Letter"}
       </button>
 
-      {loading && <p className="text-gray-500">Please wait, generating letter...</p>}
+      {loading && (
+        <p className="text-gray-500">Please wait, generating letter...</p>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {coverLetters.map((coverLetter) => (

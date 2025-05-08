@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import InterviewCard from "@/components/interview-question/InterviewCard";
 import { supabase } from "@/lib/supabase/client";
+import { useLoading } from "@/context/LoadingContext";
 
 type InterviewItem = {
   id: string;
@@ -12,11 +13,15 @@ type InterviewItem = {
 
 export default function InterviewPage() {
   const [interviewList, setInterviewList] = useState<InterviewItem[]>([]);
-  const [showModal, setShowModal] = useState(false); // <-- Default is false now
+  const [showModal, setShowModal] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loader state
+  const { setIsLoading: setGlobalLoading } = useLoading();
 
   useEffect(() => {
+    setGlobalLoading(false);
+
     const fetchInterviewQuestions = async () => {
       const {
         data: { user },
@@ -50,6 +55,9 @@ export default function InterviewPage() {
     e.preventDefault();
     if (!jobTitle || !jobDescription) return;
 
+    // Set loading state to true
+    setIsLoading(true);
+
     try {
       const res = await fetch("/api/generate-test", {
         method: "POST",
@@ -69,11 +77,6 @@ export default function InterviewPage() {
           console.error("Failed to get user:", userError);
           return;
         }
-
-        localStorage.setItem(
-          `interview-${jobTitle.toLowerCase().replace(/\s+/g, "-")}`,
-          JSON.stringify(data.questions)
-        );
 
         const { data: insertedData, error: insertError } = await supabase
           .from("interview_questions")
@@ -99,10 +102,13 @@ export default function InterviewPage() {
 
         setJobTitle("");
         setJobDescription("");
-        setShowModal(false); // close modal after submit
+        setShowModal(false); // Close the modal after generating the test
       }
     } catch (err) {
       console.error("API call failed:", err);
+    } finally {
+      // Set loading state to false after the test is generated and modal is closed
+      setIsLoading(false);
     }
   };
 
@@ -112,7 +118,7 @@ export default function InterviewPage() {
       <div className="p-6">
         <button
           onClick={() => setShowModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-300"
+          className="bg-[#38b6ff] text-white px-4 py-2 rounded transition-all duration-300"
         >
           + Create New
         </button>
@@ -120,9 +126,9 @@ export default function InterviewPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-blur bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-xl">
-            <h2 className="text-xl font-semibold mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+          <div className="bg-white p-8 rounded-xl max-w-md w-full shadow-2xl transform transition-all duration-300 scale-95">
+            <h2 className="text-xl font-semibold mb-4 text-center">
               Generate Interview Test
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -131,27 +137,39 @@ export default function InterviewPage() {
                 placeholder="Job Title"
                 value={jobTitle}
                 onChange={(e) => setJobTitle(e.target.value)}
-                className="w-full border p-2 rounded"
+                className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
               <textarea
                 placeholder="Job Description"
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
-                className="w-full border p-2 rounded"
+                className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={4}
                 required
               />
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition-all duration-300"
+                className="w-full hover:bg-blue-500 bg-[#38b6ff] text-white p-3 rounded-lg transition-all duration-300 flex justify-center items-center"
               >
-                Generate Test
+                {isLoading ? (
+                  <>
+                    <div
+                      className="w-5 h-5 border-4 border-t-4 border-white border-solid rounded-full animate-spin mr-2"
+                      role="status"
+                    >
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    Generating...
+                  </>
+                ) : (
+                  "Generate Test"
+                )}
               </button>
             </form>
             <button
               onClick={() => setShowModal(false)}
-              className="mt-4 w-full bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400 transition-all duration-300"
+              className="mt-4 w-full bg-gray-300 text-gray-800 p-3 rounded-lg transition-all duration-300"
             >
               Cancel
             </button>
@@ -160,7 +178,7 @@ export default function InterviewPage() {
       )}
 
       {/* Interview Cards */}
-      <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {interviewList.map(({ id, title, description }) => (
           <InterviewCard
             key={id}

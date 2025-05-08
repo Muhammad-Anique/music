@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 import CoverLetterFormModal from "@/components/cover-letter/CoverLetterFormModal";
 import EmailCard from "@/components/emails/emails-card";
-
+import { useLoading } from "@/context/LoadingContext";
 interface Email {
   id: string;
   title: string;
@@ -17,7 +17,7 @@ const CoverLettersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+const { setIsLoading } = useLoading();
   const fetchEmails = async () => {
     const { data, error } = await supabase.from("email_hr").select("*");
     console.log("Fetched Emails:", data, error);
@@ -45,6 +45,7 @@ const CoverLettersPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(false);
     fetchEmails();
   }, []);
 
@@ -116,7 +117,7 @@ const CoverLettersPage = () => {
 
       <button
         onClick={() => setIsModalOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg mb-4"
+        className="px-4 py-2 bg-[#38b6ff]  hover:bg-blue-500 text-white rounded-lg mb-4"
         disabled={loading}
       >
         {loading ? "Generating..." : "New Email To HR"}
