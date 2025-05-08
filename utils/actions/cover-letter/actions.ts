@@ -9,6 +9,15 @@ export async function generate(input: string, config?: AIConfig) {
   try {
     const stream = createStreamableValue('');
     const subscriptionPlan = await getSubscriptionPlan();
+    config = {
+      model: "gpt-4o-mini",
+      apiKeys: [
+        {
+          service: "openai",
+          key: process.env.OPENAI_API_KEY!,
+        },
+      ],
+    };
     const isPro = subscriptionPlan === 'pro';
     const aiClient = isPro ? initializeAIClient(config, isPro) : initializeAIClient(config);
 
