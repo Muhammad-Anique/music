@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ResumePreview } from "../preview/resume-preview";
 import CoverLetter from "@/components/cover-letter/cover-letter";
 import { ResumeContextMenu } from "../preview/resume-context-menu";
-
+import FollowUpEmail from "@/components/follow-up-email/follow-up-email";
 interface PreviewPanelProps {
   resume: Resume;
   onResumeChange: (field: keyof Resume, value: Resume[keyof Resume]) => void;
@@ -47,6 +47,11 @@ export function PreviewPanel({
         //     onResumeChange('cover_letter', data.cover_letter as Record<string, unknown>);
         //   }
         // }}
+      />
+      <FollowUpEmail
+
+        containerWidth={width}
+
       />
     </ScrollArea>
   );
