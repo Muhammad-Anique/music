@@ -17,7 +17,7 @@ const CoverLettersPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-const { setIsLoading } = useLoading();
+  const { setIsLoading } = useLoading();
   const fetchEmails = async () => {
     const { data, error } = await supabase.from("email_hr").select("*");
     console.log("Fetched Emails:", data, error);
@@ -26,17 +26,16 @@ const { setIsLoading } = useLoading();
       setError("Failed to fetch cover letters");
     } else {
       const parsedData = data.map((email: any) => {
-        let parsedContent = { subject: "", body: "" };
+        let parsedContent = { content: "" };
         try {
-          parsedContent = JSON.parse(email.content);
+          parsedContent =email.content;
         } catch (e) {
           console.error("Failed to parse content:", e);
         }
 
         return {
           ...email,
-          parsedSubject: parsedContent.subject,
-          parsedBody: parsedContent.body,
+          parsedBody: parsedContent.content,
         };
       });
 
@@ -139,6 +138,7 @@ const { setIsLoading } = useLoading();
       </div>
 
       <CoverLetterFormModal
+        modalTitle="Create New Follow Up Email"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleCreateCoverLetter}

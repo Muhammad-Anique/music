@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 interface CoverLetterFormModalProps {
+  modalTitle: string;
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (title: string, jobDescription: string, tone: number) => void;
@@ -12,6 +13,8 @@ const CoverLetterFormModal = ({
   isOpen,
   onClose,
   onSubmit,
+  modalTitle
+
 }: CoverLetterFormModalProps) => {
   const [title, setTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
@@ -35,9 +38,7 @@ const CoverLetterFormModal = ({
           ✕
         </button>
 
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-          Create New Cover Letter
-        </h2>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">{  modalTitle }</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>

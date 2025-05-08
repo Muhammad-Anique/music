@@ -127,6 +127,7 @@ const CoverLettersPage = () => {
       </div>
 
       <CoverLetterFormModal
+        modalTitle="Create New Cover Letter"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleCreateCoverLetter}
