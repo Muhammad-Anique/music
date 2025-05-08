@@ -56,23 +56,23 @@ export default function Sidebar() {
     },
     {
       name: "Interview Buddy",
-      href: "/dashboard/interview-buddy",
+      href: "/dashboard/under-construction",
       icon: <Globe className="w-6 h-6 mr-3" />,
     },
     {
       name: "Search Jobs",
-      href: "/dashboard/search-jobs",
+      href: "/dashboard/under-construction",
       icon: <Search className="w-6 h-6 mr-3" />,
     },
     {
       name: "Saved Jobs",
-      href: "/dashboard/saved-jobs",
+      href: "/dashboard/under-construction",
       icon: <Bookmark className="w-6 h-6 mr-3" />,
     },
 
     {
       name: "Auto Apply",
-      href: "/dashboard/auto-apply",
+      href: "/dashboard/under-construction",
       icon: <Rocket className="w-6 h-6 mr-3" />,
     },
     // { name: 'Job Hub', href: '/dashboard/jobhub', icon: <Briefcase className="w-6 h-6 mr-3" /> },
