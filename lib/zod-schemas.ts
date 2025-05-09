@@ -149,6 +149,8 @@ export const resumeSchema = z.object({
 //   section_configs: z.record(sectionConfigSchema).optional(),
   has_cover_letter: z.boolean().default(false),
   cover_letter: z.record(z.unknown()).nullable().optional(),
+  has_follow_up_email: z.boolean().default(false),
+  follow_up_email: z.record(z.unknown()).nullable().optional(),
 });
 
 // Type inference helpers

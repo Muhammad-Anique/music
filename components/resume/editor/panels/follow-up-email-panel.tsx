@@ -91,7 +91,7 @@ export function FollowUpEmailPanel({
         generatedContent += delta;
         // Update resume context directly
         // console.log('Generated Content:', generatedContent);
-        updateField('cover_letter', {
+        updateField('follow_up_email', {
           content: generatedContent,
         });
       }
@@ -167,7 +167,7 @@ export function FollowUpEmailPanel({
         <h3 className="text-lg font-semibold text-emerald-900">Follow Up Email</h3>
       </div>
 
-      {resume.has_cover_letter ? (
+      {resume.has_follow_up_email ? (
         <div className="space-y-6">
           <div className={cn(
             "w-full p-4",
@@ -219,7 +219,7 @@ export function FollowUpEmailPanel({
               variant="destructive"
               size="sm"
               className="w-full"
-              onClick={() => updateField('has_cover_letter', false)}
+              onClick={() => updateField('has_follow_up_email', false)}
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Delete Follow Up Email
@@ -235,7 +235,7 @@ export function FollowUpEmailPanel({
             variant="outline"
             size="sm"
             className="w-full border-emerald-600/50 text-emerald-700 hover:bg-emerald-50"
-            onClick={() => updateField('has_cover_letter', true)}
+            onClick={() => updateField('has_follow_up_email', true)}
           >
             <Plus className="h-4 w-4 mr-2" />
             Create Follow Up Email

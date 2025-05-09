@@ -85,6 +85,8 @@ export interface Resume {
   };
   has_cover_letter: boolean;
   cover_letter?: Record<string, unknown> | null;
+  has_follow_up_email: boolean;
+  follow_up_email?: Record<string, unknown> | null;
 }
 
 export interface DocumentSettings {

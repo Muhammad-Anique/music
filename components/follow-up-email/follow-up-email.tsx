@@ -18,7 +18,7 @@ export default function FollowUpEmail({ containerWidth }: FollowUpEmailProps) {
   const handleContentChange = useCallback((data: Record<string, unknown>) => {
     dispatch({
       type: 'UPDATE_FIELD',
-      field: 'cover_letter',
+      field: 'follow_up_email',
       value: {
         content: data.content,
         lastUpdated: new Date().toISOString()
@@ -27,7 +27,7 @@ export default function FollowUpEmail({ containerWidth }: FollowUpEmailProps) {
   }, [dispatch]);
 
 
-  if (!state.resume.has_cover_letter) {
+  if (!state.resume.has_follow_up_email) {
     return (
       <div className="space-y-4">
         <Button
@@ -36,7 +36,7 @@ export default function FollowUpEmail({ containerWidth }: FollowUpEmailProps) {
           className="w-full border-emerald-600/50 text-emerald-700 hover:bg-emerald-50"
           onClick={() => dispatch({
             type: 'UPDATE_FIELD',
-            field: 'has_cover_letter',
+            field: 'has_follow_up_email',
             value: true
           })}
         >
@@ -52,19 +52,19 @@ export default function FollowUpEmail({ containerWidth }: FollowUpEmailProps) {
       {/* Print version */}
       <div 
         ref={contentRef} 
-        id="cover-letter-content"
+        id="follow-up-email-content"
         className="absolute -left-[9999px] w-[816px]"
       >
         <div 
           className="p-16 prose prose-sm !max-w-none"
-          dangerouslySetInnerHTML={{ __html: state.resume.cover_letter?.content || '' }} 
+          dangerouslySetInnerHTML={{ __html: state.resume.follow_up_email?.content || '' }} 
         />
       </div>
       
       {/* Interactive editor */}
       <div className="[&_.print-hidden]:hidden">
         <FollowUpEmailEditor 
-          initialData={{ content: state.resume.cover_letter?.content || '' }}
+          initialData={{ content: state.resume.follow_up_email?.content || '' }}
           onChange={handleContentChange}
           containerWidth={containerWidth}
         />
