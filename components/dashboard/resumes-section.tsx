@@ -100,7 +100,7 @@ export function ResumesSection({
           : "border-[#38b6ff]/70 hover:border-[#38b6ff]/40",
         type === 'base'
           ? "bg-gradient-to-br from-blue-50/80 via-blue-50/40 to-blue-100/60"
-          : "bg-gradient-to-br from-[#38b6ff]/80 via-[#38b6ff]/40 to-[#38b6ff]/60",
+          : "bg-gradient-to-br from-[#38b6ff]/20 via-[#38b6ff]/0 to-[#38b6ff]/20",
         "hover:shadow-lg hover:shadow-purple-100/50 hover:-translate-y-1",
         "after:absolute after:inset-0 after:bg-gradient-to-br",
         type === 'base'
@@ -119,8 +119,8 @@ export function ResumesSection({
             "transform transition-all duration-500",
             "shadow-sm group-hover/new-resume:shadow-md",
             type === 'base'
-              ? "bg-gradient-to-br from-purple-100 to-purple-50"
-              : "bg-gradient-to-br from-pink-100 to-pink-50",
+              ? "bg-gradient-to-br from-white to-white"
+              : "bg-gradient-to-br from-white to-white",
             "group-hover/new-resume:scale-110"
           )}>
             <config.icon className={cn(

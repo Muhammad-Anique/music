@@ -1,5 +1,5 @@
 import FollowUpEmailEditor from "./follow-up-email-editor";
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback,useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useResumeContext } from '@/components/resume/editor/resume-editor-context';
@@ -15,6 +15,19 @@ export default function FollowUpEmail({ containerWidth }: FollowUpEmailProps) {
   const { state, dispatch } = useResumeContext();
   const contentRef = useRef<HTMLDivElement>(null);
 
+
+  useEffect(() => {
+      if (state.resume.has_follow_up_email) {
+        return;
+      }
+      dispatch({
+        type: "UPDATE_FIELD",
+          field: 'has_follow_up_email',
+        value: true,
+      });
+  }, [dispatch]);
+
+  
   const handleContentChange = useCallback((data: Record<string, unknown>) => {
     dispatch({
       type: 'UPDATE_FIELD',

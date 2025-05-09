@@ -32,9 +32,6 @@ export function CoverLetterPanel({
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', description: '' });
 
-   useEffect(() => {
-    generateCoverLetter();
-  }, []);
 
   const updateField = (field: keyof Resume, value: Resume[keyof Resume]) => {
     dispatch({ 

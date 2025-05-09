@@ -26,7 +26,8 @@ export function ResumeEditorActions({
   const { resume, isSaving } = state;
   const [downloadOptions, setDownloadOptions] = useState({
     resume: true,
-    coverLetter: true
+    coverLetter: true,
+    followUpEmail: true
   });
 
   // Save Resume
@@ -127,8 +128,7 @@ export function ResumeEditorActions({
                     }
 
                     // Download Cover Letter if selected and exists
-                    if (downloadOptions.coverLetter && resume.has_cover_letter) {
-                      // Dynamically import html2pdf only when needed
+                    if (downloadOptions.coverLetter) {
                       const html2pdf = (await import('html2pdf.js')).default;
                       
                       const coverLetterElement = document.getElementById('cover-letter-content');
@@ -136,19 +136,66 @@ export function ResumeEditorActions({
                         throw new Error('Cover letter content not found');
                       }
 
+                      // Check if content is empty or too short
+                      const content = coverLetterElement.innerHTML.trim();
+                      if (!content || content.length < 50) {
+                        toast({
+                          title: "Cannot download",
+                          description: "Cover letter content is empty or too short.",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+
+                      // Create a temporary container for PDF generation
+                      const tempContainer = document.createElement('div');
+                      tempContainer.innerHTML = `
+                        <div style="
+                          font-family: 'Arial', sans-serif;
+                          width: 100%;
+                          margin: 0;
+                          padding: 60px;
+                          background-color: white;
+                        ">
+                          <div style="
+                            background-color: #2563eb;
+                            color: white;
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin: -60px -60px 40px -60px;
+                            padding: 20px;
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 60px;
+                          ">
+                            Cover Letter
+                          </div>
+                          <div style="
+                            line-height: 1.5;
+                            font-size: 11pt;
+                            color: #1f2937;
+                            width: 100%;
+                          ">
+                            ${content.replace(/<p>/g, '<p style="margin-bottom: 1.5em;">')}
+                          </div>
+                        </div>
+                      `;
+                      document.body.appendChild(tempContainer);
+
                       const opt = {
-                        margin: [0, 0, -0.5, 0],
+                        margin: [0, 0, 0, 0],
                         filename: `${resume.first_name}_${resume.last_name}_Cover_Letter.pdf`,
                         image: { type: 'jpeg', quality: 0.98 },
                         html2canvas: {
-                          backgroundColor: 'red',
+                          backgroundColor: 'white',
                           useCORS: true,
                           letterRendering: true,
-                          // width: 700,
-                          // height: 1000,
-                          // windowWidth: 700,
+                          scale: 2,
                           logging: true,
-                          // windowHeight: 2000
+                          width: 816,
+                          windowWidth: 816
                         },
                         jsPDF: { 
                           unit: 'in', 
@@ -157,7 +204,95 @@ export function ResumeEditorActions({
                         }
                       };
 
-                      await html2pdf().set(opt).from(coverLetterElement).save();
+                      try {
+                        await html2pdf().set(opt).from(tempContainer).save();
+                      } finally {
+                        document.body.removeChild(tempContainer);
+                      }
+                    }
+
+                    // Download Follow-Up Email if selected and exists
+                    if (downloadOptions.followUpEmail) {
+                      const html2pdf = (await import('html2pdf.js')).default;
+                      
+                      const followUpElement = document.getElementById('follow-up-email-content');
+                      if (!followUpElement) {
+                        throw new Error('Follow-up email content not found');
+                      }
+
+                      // Check if content is empty or too short
+                      const content = followUpElement.innerHTML.trim();
+                      if (!content || content.length < 50) {
+                        toast({
+                          title: "Cannot download",
+                          description: "Follow-up email content is empty or too short.",
+                          variant: "destructive",
+                        });
+                        return;
+                      }
+
+                      // Create a temporary container for PDF generation
+                      const tempContainer = document.createElement('div');
+                      tempContainer.innerHTML = `
+                        <div style="
+                          font-family: 'Arial', sans-serif;
+                          width: 100%;
+                          margin: 0;
+                          padding: 60px;
+                          background-color: white;
+                        ">
+                          <div style="
+                            background-color: #2563eb;
+                            color: white;
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin: -60px -60px 40px -60px;
+                            padding: 20px;
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 60px;
+                          ">
+                            Follow-Up Email
+                          </div>
+                          <div style="
+                            line-height: 1.5;
+                            font-size: 11pt;
+                            color: #1f2937;
+                            width: 100%;
+                          ">
+                            ${content.replace(/<p>/g, '<p style="margin-bottom: 1.5em;">')}
+                          </div>
+                        </div>
+                      `;
+                      document.body.appendChild(tempContainer);
+
+                      const opt = {
+                        margin: [0, 0, 0, 0],
+                        filename: `${resume.first_name}_${resume.last_name}_Follow_Up_Email.pdf`,
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: {
+                          backgroundColor: 'white',
+                          useCORS: true,
+                          letterRendering: true,
+                          scale: 2,
+                          logging: true,
+                          width: 816,
+                          windowWidth: 816
+                        },
+                        jsPDF: { 
+                          unit: 'in', 
+                          format: 'letter', 
+                          orientation: 'portrait' 
+                        }
+                      };
+
+                      try {
+                        await html2pdf().set(opt).from(tempContainer).save();
+                      } finally {
+                        document.body.removeChild(tempContainer);
+                      }
                     }
 
                     toast({
@@ -219,6 +354,20 @@ export function ResumeEditorActions({
                     )}
                   />
                   <span className="text-sm font-medium text-foreground">Cover Letter</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <Checkbox 
+                    checked={downloadOptions.followUpEmail}
+                    onCheckedChange={(checked) => 
+                      setDownloadOptions(prev => ({ ...prev, followUpEmail: checked as boolean }))
+                    }
+                    className={cn(
+                      resume.is_base_resume 
+                        ? "border-indigo-400 data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                        : "border-rose-400 data-[state=checked]:bg-rose-600 data-[state=checked]:border-rose-600"
+                    )}
+                  />
+                  <span className="text-sm font-medium text-foreground">Follow-Up Email</span>
                 </label>
               </div>
             </TooltipContent>
