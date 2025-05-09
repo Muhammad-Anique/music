@@ -1,3 +1,6 @@
+"use client"
+
+import {useEffect } from 'react';
 import { Resume, Job } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { FileText, Trash2, Plus, Sparkles, Loader2 } from "lucide-react";
@@ -28,6 +31,10 @@ export function CoverLetterPanel({
   const [customPrompt, setCustomPrompt] = useState('');
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', description: '' });
+
+   useEffect(() => {
+    generateCoverLetter();
+  }, []);
 
   const updateField = (field: keyof Resume, value: Resume[keyof Resume]) => {
     dispatch({ 
