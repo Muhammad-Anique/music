@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { getCurrentUser } from '@/lib/supabase/getCurrentUser';
 import type { User } from '@supabase/supabase-js';
-
+import { Loader2Icon } from 'lucide-react';
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       const currentUser = await getCurrentUser();
@@ -44,10 +44,16 @@ export default function Header() {
             <>
               <span className="text-sm text-gray-600">Hello, {user.email}</span>
               <Link
+                onClick={() => setIsLoading(true)}
                 href="/dashboard"
                 className="px-4 py-2 bg-[#38b6ff] rounded-full text-white text-sm"
               >
-                Dashboard
+                {isLoading ? (
+                  <div className='flex items-center space-x-2'>
+                  <span>Redirecting {" "}</span>
+                    <Loader2Icon className='w-4 h-4 animate-spin' />
+                  </div>
+                ): 'Dashboard'}
               </Link>
               <button
                 onClick={handleSignOut}
