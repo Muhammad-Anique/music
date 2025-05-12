@@ -17,7 +17,7 @@ import { getDashboardData } from "@/utils/actions";
 import { checkSubscriptionPlan } from "@/utils/actions/stripe/actions";
 
 import IsLoadingFalseforDashboard from "@/components/dashboard/isLoadingFalseforDashboard";
-import { JobHubSection } from "@/components/dashboard/jobhub-section";
+
 
 
 export default async function Home({
@@ -162,7 +162,7 @@ export default async function Home({
                   {getGreeting()}, {profile.first_name}
                 </h1>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  Welcome to your job hub dashboard
+                  Welcome to your resume dashboard
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default async function Home({
             {/* Resume Bookshelf */}
             <div className="">
               {/* Base Resumes Section */}
-              {/* <ResumesSection
+              <ResumesSection
                 type="base"
                 resumes={baseResumes}
                 profile={profile}
@@ -181,13 +181,13 @@ export default async function Home({
                 canCreateMore={canCreateBase}
               />
 
-             
+              {/* Thin Divider */}
               <div className="relative py-2">
                 <div className="h-px bg-gradient-to-r from-transparent via-purple-300/30 to-transparent" />
-              </div> */}
+              </div>
 
               {/* Tailored Resumes Section */}
-              <JobHubSection
+              <ResumesSection
                 type="tailored"
                 resumes={tailoredResumes}
                 profile={profile}
